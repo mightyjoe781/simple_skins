@@ -25,6 +25,8 @@ while true do
 	id = id + 1
 end
 
+id = id - 1
+
 -- load Metadata
 skins.meta = {}
 local f, data
@@ -108,6 +110,10 @@ end
 -- update player skin
 skins.update_player_skin = function(player)
 
+	if not player then
+		return
+	end
+
 	local name = player:get_player_name()
 
 	if skins.armor then
@@ -155,6 +161,8 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 
 		local index = event.index
 
+		if index > id then index = id end
+
 		skins.skins[name] = skins.list[index]
 
 		if skins.inv then
@@ -163,9 +171,7 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 			)
 		end
 
-		minetest.after(0.2, function()
-			skins.update_player_skin(player)
-		end)
+		skins.update_player_skin(player)
 
 	end
 end)
