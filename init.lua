@@ -1,4 +1,5 @@
--- Simple Skins mod for minetest (13th August 2015)
+
+-- Simple Skins mod for minetest (5th June 2016)
 -- Adds a simple skin selector to the inventory, using inventory_plus
 -- or by using the /skin command to bring up selection list.
 -- Released by TenPlus1 and based on Zeg9's code under WTFPL
@@ -30,7 +31,7 @@ id = id - 1
 -- load Metadata
 skins.meta = {}
 local f, data
-for _, i in ipairs(skins.list) do
+for _, i in pairs(skins.list) do
 	skins.meta[i] = {}
 	f = io.open(skins.modpath .. "/meta/" .. i .. ".txt")
 	data = nil
@@ -54,7 +55,7 @@ skins.load = function()
 	end
 	if data and data ~= "" then
 		local lines = string.split(data, "\n")
-		for _, line in ipairs(lines) do
+		for _, line in pairs(lines) do
 			data = string.split(line, ' ', 2)
 			skins.skins[data[1]] = data[2]
 		end
@@ -85,8 +86,10 @@ skins.formspec.main = function(name)
 		.. "label[.5,2;Select Player Skin:]"
 		.. "textlist[.5,2.5;5.8,4;skins_set;"
 
-	for i, v in ipairs(skins.list) do
-		formspec = formspec .. skins.meta[v].name .. ","
+	for i = 1, #skins.list do
+
+		formspec = formspec .. skins.meta[ skins.list[i] ].name .. ","
+
 		if skins.skins[name] == skins.list[i] then
 			selected = i
 		end
@@ -94,7 +97,8 @@ skins.formspec.main = function(name)
 
 	formspec = formspec .. ";" .. selected .. ";true]"
 
-	local meta = skins.meta[skins.skins[name]]
+	local meta = skins.meta[ skins.skins[name] ]
+
 	if meta then
 		if meta.name then
 			formspec = formspec .. "label[2,.5;Name: " .. meta.name .. "]"
@@ -208,3 +212,5 @@ minetest.register_chatcommand("skin", {
 		)
 	end,
 })
+
+print ("[MOD] Simple Skins loaded")
