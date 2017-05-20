@@ -120,14 +120,14 @@ skins.update_player_skin = function(player)
 
 	local name = player:get_player_name()
 
-	if skins.armor then
-		armor.textures[name].skin = skins.skins[name] .. ".png"
-		armor:set_player_armor(player)
-	else
+--	if skins.armor then
+--		armor.textures[name].skin = skins.skins[name] .. ".png"
+--		armor:set_player_armor(player)
+--	else
 		player:set_properties({
 			textures = {skins.skins[name] .. ".png"},
 		})
-	end
+--	end
 
 	skins.save()
 end
