@@ -1,14 +1,22 @@
 
--- Simple Skins mod for minetest (5th June 2016)
+-- Simple Skins mod for minetest (26th July 2017)
 -- Adds a simple skin selector to the inventory, using inventory_plus
 -- or by using the /skin command to bring up selection list.
--- Released by TenPlus1 and based on Zeg9's code under WTFPL
+-- Released by TenPlus1 and based on Zeg9's code under MIT license
 
 skins = {}
 skins.skins = {}
 skins.modpath = minetest.get_modpath("simple_skins")
 skins.armor = minetest.get_modpath("3d_armor")
 skins.inv = minetest.get_modpath("inventory_plus")
+
+-- Intllib
+local S
+if minetest.get_modpath("intllib") then
+	S = intllib.Getter()
+else
+	S = function(s) return s end
+end
 
 -- load skin list
 skins.list = {}
@@ -83,7 +91,7 @@ skins.formspec.main = function(name)
 	local selected = 1 -- select default
 	local formspec = "size[7,7]"
 		.. "bgcolor[#08080822;true]"
-		.. "label[.5,2;Select Player Skin:]"
+		.. "label[.5,2;" .. S("Select Player Skin") .. ":]"
 		.. "textlist[.5,2.5;5.8,4;skins_set;"
 
 	for i = 1, #skins.list do
@@ -101,10 +109,10 @@ skins.formspec.main = function(name)
 
 	if meta then
 		if meta.name then
-			formspec = formspec .. "label[2,.5;Name: " .. meta.name .. "]"
+			formspec = formspec .. "label[2,.5;" .. S("Name") .. ": " .. meta.name .. "]"
 		end
 		if meta.author then
-			formspec = formspec .. "label[2,1;Author: " .. meta.author .. "]"
+			formspec = formspec .. "label[2,1;" .. S("Author") .. ": " .. meta.author .. "]"
 		end
 	end
 
@@ -183,7 +191,7 @@ end)
 -- admin command to set player skin (usually for custom skins)
 minetest.register_chatcommand("setskin", {
 	params = "<player> <skin number>",
-	description = "Admin command to set player skin",
+	description = S("Admin command to set player skin"),
 	privs = {server = true},
 	func = function(name, param)
 
@@ -197,18 +205,18 @@ minetest.register_chatcommand("setskin", {
 		skins.save()
 
 		minetest.chat_send_player(name,
-			 "** " .. user .. "'s skin set to character_" .. skin .. ".png")
+			 "** " .. user .. S("'s skin set to") .. " character_" .. skin .. ".png")
 	end,
 })
 
 -- player command to set skin
 minetest.register_chatcommand("skin", {
-	description = "Set player skin",
+	description = S("Set player skin"),
 	func = function(name, param)
 		minetest.show_formspec(name,
 			"skins_set",
 			skins.formspec.main(name)
-			.."button_exit[0,.75;2,.5;;Close]"
+			.."button_exit[0,.75;2,.5;;" .. S("Close") .. "]"
 		)
 	end,
 })
