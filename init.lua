@@ -10,13 +10,9 @@ skins.modpath = minetest.get_modpath("simple_skins")
 skins.armor = minetest.get_modpath("3d_armor")
 skins.inv = minetest.get_modpath("inventory_plus")
 
--- Intllib
-local S
-if minetest.get_modpath("intllib") then
-	S = intllib.Getter()
-else
-	S = function(s) return s end
-end
+-- Load support for intllib.
+local MP = minetest.get_modpath(minetest.get_current_modname())
+local S, NS = dofile(MP.."/intllib.lua")
 
 -- load skin list
 skins.list = {}
@@ -91,7 +87,7 @@ skins.formspec.main = function(name)
 	local selected = 1 -- select default
 	local formspec = "size[7,7]"
 		.. "bgcolor[#08080822;true]"
-		.. "label[.5,2;" .. S("Select Player Skin") .. ":]"
+		.. "label[.5,2;" .. S("Select Player Skin:") .. "]"
 		.. "textlist[.5,2.5;5.8,4;skins_set;"
 
 	for i = 1, #skins.list do
@@ -109,10 +105,10 @@ skins.formspec.main = function(name)
 
 	if meta then
 		if meta.name then
-			formspec = formspec .. "label[2,.5;" .. S("Name") .. ": " .. meta.name .. "]"
+			formspec = formspec .. "label[2,.5;" .. S("Name: ") .. meta.name .. "]"
 		end
 		if meta.author then
-			formspec = formspec .. "label[2,1;" .. S("Author") .. ": " .. meta.author .. "]"
+			formspec = formspec .. "label[2,1;" .. S("Author: ") .. meta.author .. "]"
 		end
 	end
 
@@ -221,4 +217,4 @@ minetest.register_chatcommand("skin", {
 	end,
 })
 
-print ("[MOD] Simple Skins loaded")
+print (S("[MOD] Simple Skins loaded"))

@@ -1,7 +1,0 @@
-Name = 
-Author = 
-Admin command to set player skin = 
-'s skin set to = 
-Set player skin = 
-Select Player Skin =
-Close =

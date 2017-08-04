@@ -1,7 +1,0 @@
-Name = Nom
-Author = Auteur
-Admin command to set player skin = Commande admin pour définir l'apparence du joueur
-'s skin set to = : apparence définie,
-Set player skin = Définit l'apparence du joueur
-Select Player Skin = Choix de l'apparence
-Close = Fermer
