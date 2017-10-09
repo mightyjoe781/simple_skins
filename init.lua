@@ -71,18 +71,8 @@ skins.load = function()
 end
 
 
--- load player skins now
+-- load player skins now for backwards compatibility
 skins.load()
-
-skins.save = function()
-	local output = io.open(skins.file,'w')
-	for name, skin in pairs(skins.skins) do
-		if name and skin then
-			output:write(name .. " " .. skin .. "\n")
-		end
-	end
-	io.close(output)
-end
 
 
 -- skin selection page
@@ -118,8 +108,6 @@ skins.formspec.main = function(name)
 		formspec = formspec .. ";" .. selected .. ";false]"
 	end
 
---	local meta = skins.meta[ skins.skins[name] ]
-
 	if meta then
 		if meta.name then
 			formspec = formspec .. "label[2,.5;" .. S("Name: ") .. meta.name .. "]"
@@ -146,7 +134,9 @@ skins.update_player_skin = function(player)
 		textures = {skins.skins[name] .. ".png"},
 	})
 
-	skins.save()
+	if skins.skins[name] ~= "character_1" then
+		player:set_attribute("simple_skins:skin", skins.skins[name])
+	end
 end
 
 
@@ -196,6 +186,13 @@ minetest.register_on_joinplayer(function(player)
 
 	local name = player:get_player_name()
 
+	-- do we already have a skin in player attributes?
+	local skin = player:get_attribute("simple_skins:skin")
+	if skin then
+		skins.skins[name] = skin
+	end
+
+	-- no skin found? ok we use default
 	if not skins.skins[name] then
 		skins.skins[name] = "character_1"
 	end
@@ -256,25 +253,15 @@ minetest.register_chatcommand("setskin", {
 		if not user or not skin then return end
 
 		skins.skins[user] = "character_"..tonumber(skin)
-		skins.save()
+
+		if skins.skins[name] ~= "character_1" then
+			player:set_attribute("simple_skins:skin", skins.skins[name])
+		end
 
 		minetest.chat_send_player(name,
 			 "** " .. user .. S("'s skin set to") .. " character_" .. skin .. ".png")
 	end,
 })
 
---[[
--- player command to set skin
-minetest.register_chatcommand("skin", {
-	description = S("Set player skin"),
-	func = function(name, param)
-		minetest.show_formspec(name,
-			"skins_set",
-			skins.formspec.main(name)
-			.."button_exit[0,.75;2,.5;;" .. S("Close") .. "]"
-		)
-	end,
-})
-]]
 
 print (S("[MOD] Simple Skins loaded"))
