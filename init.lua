@@ -255,7 +255,7 @@ minetest.register_chatcommand("setskin", {
 		skins.skins[user] = "character_"..tonumber(skin)
 
 		if skins.skins[name] ~= "character_1" then
-			player:set_attribute("simple_skins:skin", skins.skins[name])
+			minetest.get_player_by_name(name):set_attribute("simple_skins:skin", skins.skins[name])
 		end
 
 		minetest.chat_send_player(name,
