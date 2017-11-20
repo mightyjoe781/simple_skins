@@ -1,5 +1,5 @@
 
--- Simple Skins mod for minetest (29th September 2017)
+-- Simple Skins mod for minetest
 -- Adds a simple skin selector to the inventory by using
 -- the default sfinv or inventory_plus when running.
 -- Released by TenPlus1 and based on Zeg9's code under MIT license
@@ -18,9 +18,6 @@ local S, NS = dofile(MP.."/intllib.lua")
 
 -- load skin list
 skins.list = {}
-skins.add = function(skin)
-	table.insert(skins.list, skin)
-end
 
 local id = 1
 local f
@@ -28,7 +25,7 @@ while true do
 	f = io.open(skins.modpath .. "/textures/character_" .. id .. ".png")
 	if not f then break end
 	f:close()
-	skins.add("character_" .. id)
+	table.insert(skins.list, "character_" .. id)
 	id = id + 1
 end
 id = id - 1
@@ -51,28 +48,22 @@ for _, i in pairs(skins.list) do
 end
 
 
--- player load/save routines
+-- load player skins from file for backwards compatibility
 skins.file = minetest.get_worldpath() .. "/simple_skins.mt"
 
-skins.load = function()
-	local input = io.open(skins.file, "r")
-	local data = nil
-	if input then
-		data = input:read('*all')
-	end
-	if data and data ~= "" then
-		local lines = string.split(data, "\n")
-		for _, line in pairs(lines) do
-			data = string.split(line, ' ', 2)
-			skins.skins[data[1]] = data[2]
-		end
-		io.close(input)
+local input = io.open(skins.file, "r")
+local data = nil
+if input then
+	data = input:read('*all')
+	io.close(input)
+end
+if data and data ~= "" then
+	local lines = string.split(data, "\n")
+	for _, line in pairs(lines) do
+		data = string.split(line, " ", 2)
+		skins.skins[data[1]] = data[2]
 	end
 end
-
-
--- load player skins now for backwards compatibility
-skins.load()
 
 
 -- skin selection page
@@ -128,15 +119,9 @@ skins.update_player_skin = function(player)
 		return
 	end
 
-	local name = player:get_player_name()
-
 	player:set_properties({
-		textures = {skins.skins[name] .. ".png"},
+		textures = {skins.skins[player:get_player_name()] .. ".png"},
 	})
-
-	if skins.skins[name] ~= "character_1" then
-		player:set_attribute("simple_skins:skin", skins.skins[name])
-	end
 end
 
 
@@ -165,6 +150,8 @@ sfinv.register_page("skins:skins", {
 
 			skins.update_player_skin(player)
 
+			player:set_attribute("simple_skins:skin", skins.skins[name])
+
 			sfinv.override_page("skins:skins", {
 				get = function(self, player, context)
 					local name = player:get_player_name()
@@ -190,10 +177,7 @@ minetest.register_on_joinplayer(function(player)
 	local skin = player:get_attribute("simple_skins:skin")
 	if skin then
 		skins.skins[name] = skin
-	end
-
-	-- no skin found? ok we use default
-	if not skins.skins[name] then
+	else -- otherwise use default skin
 		skins.skins[name] = "character_1"
 	end
 
@@ -235,6 +219,8 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 		end
 
 		skins.update_player_skin(player)
+
+		player:set_attribute("simple_skins:skin", skins.skins[name])
 	end
 end)
 
@@ -252,14 +238,19 @@ minetest.register_chatcommand("setskin", {
 
 		if not user or not skin then return end
 
-		skins.skins[user] = "character_"..tonumber(skin)
+		local player = minetest.get_player_by_name(user)
 
-		if skins.skins[name] ~= "character_1" then
-			minetest.get_player_by_name(name):set_attribute("simple_skins:skin", skins.skins[name])
+		if player then
+
+			skins.skins[user] = "character_" .. tonumber(skin)
+
+			player:set_attribute("simple_skins:skin", skins.skins[user])
+
+			minetest.chat_send_player(name, "** " .. user
+					.. S("'s skin set to") .. " character_" .. skin .. ".png")
+		else
+			minetest.chat_send_player(name, "** Player " .. user .. " not online!")
 		end
-
-		minetest.chat_send_player(name,
-			 "** " .. user .. S("'s skin set to") .. " character_" .. skin .. ".png")
 	end,
 })
 
