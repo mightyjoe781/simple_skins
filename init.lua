@@ -28,6 +28,7 @@ while true do
 	table.insert(skins.list, "character_" .. id)
 	id = id + 1
 end
+skins.list[id] = nil
 id = id - 1
 
 
@@ -85,11 +86,15 @@ skins.formspec.main = function(name)
 
 	for i = 1, #skins.list do
 
-		formspec = formspec .. skins.meta[ skins.list[i] ].name .. ","
+		formspec = formspec .. skins.meta[ skins.list[i] ].name
 
 		if skins.skins[name] == skins.list[i] then
 			selected = i
 			meta = skins.meta[ skins.skins[name] ]
+		end
+
+		if i < #skins.list then
+			formspec = formspec ..","
 		end
 	end
 
