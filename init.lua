@@ -239,22 +239,29 @@ minetest.register_chatcommand("setskin", {
 
 		if not param or param == "" then return end
 
-		local user, skin = string.match(param, "([^ ]+) (-?%d+)")
+		local playername, skin = string.match(param, "([^ ]+) (-?%d+)")
 
-		if not user or not skin then return end
+		if not playername or not skin then return end
 
-		local player = minetest.get_player_by_name(user)
+		local player = minetest.get_player_by_name(playername)
 
 		if player then
 
-			skins.skins[user] = "character_" .. tonumber(skin)
+			skins.skins[playername] = "character_" .. tonumber(skin)
 
-			player:set_attribute("simple_skins:skin", skins.skins[user])
+			player:set_attribute("simple_skins:skin", skins.skins[playername])
 
-			minetest.chat_send_player(name, "** " .. user
+			player:set_properties({
+				textures = {skins.skins[playername] .. ".png"},
+			})
+
+			minetest.chat_send_player(name, "** " .. playername
 					.. S("'s skin set to") .. " character_" .. skin .. ".png")
+
+			minetest.chat_send_player(playername,
+					S("Your skin has been set to") .. " character_" .. skin)
 		else
-			minetest.chat_send_player(name, "** Player " .. user .. " not online!")
+			minetest.chat_send_player(name, "** Player " .. playername .. " not online!")
 		end
 	end,
 })
