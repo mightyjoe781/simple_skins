@@ -212,9 +212,11 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 
 	if event.type == "CHG" then
 
-		local index = event.index
+		local index = math.min(event.index, id)
 
-		if index > id then index = id end
+		if not skins.list[index] then
+			return -- Do not update wrong skin number
+		end
 
 		skins.skins[name] = skins.list[index]
 
@@ -237,32 +239,33 @@ minetest.register_chatcommand("setskin", {
 	privs = {server = true},
 	func = function(name, param)
 
-		if not param or param == "" then return end
-
 		local playername, skin = string.match(param, "([^ ]+) (-?%d+)")
 
-		if not playername or not skin then return end
+		if not playername or not skin then
+			return false, S("** Insufficient or wrong parameters")
+		end
 
 		local player = minetest.get_player_by_name(playername)
 
-		if player then
-
-			skins.skins[playername] = "character_" .. tonumber(skin)
-
-			player:set_attribute("simple_skins:skin", skins.skins[playername])
-
-			player:set_properties({
-				textures = {skins.skins[playername] .. ".png"},
-			})
-
-			minetest.chat_send_player(name, "** " .. playername
-					.. S("'s skin set to") .. " character_" .. skin .. ".png")
-
-			minetest.chat_send_player(playername,
-					S("Your skin has been set to") .. " character_" .. skin)
-		else
-			minetest.chat_send_player(name, "** Player " .. playername .. " not online!")
+		if not player then
+			return false, S("** Player @1 not online!", playername)
 		end
+
+		if not skins.list[tonumber(skin)] then
+			return false, S("** Invalid skin number (max value is @1)", id)
+		end
+
+		skins.skins[playername] = "character_" .. tonumber(skin)
+
+		player:set_attribute("simple_skins:skin", skins.skins[playername])
+
+		skins.update_player_skin(player)
+
+		minetest.chat_send_player(playername,
+				S("Your skin has been set to") .. " character_" .. skin)
+
+		return true, "** " .. playername .. S("'s skin set to")
+			.. " character_" .. skin .. ".png"
 	end,
 })
 
