@@ -124,8 +124,10 @@ skins.update_player_skin = function(player)
 		return
 	end
 
+	local name = player:get_player_name()
+
 	player:set_properties({
-		textures = {skins.skins[player:get_player_name()] .. ".png"},
+		textures = {skins.skins[name] .. ".png"},
 	})
 end
 
@@ -251,15 +253,16 @@ minetest.register_chatcommand("setskin", {
 			return false, S("** Player @1 not online!", playername)
 		end
 
-		if not skins.list[tonumber(skin)] then
-			return false, S("** Invalid skin number (max value is @1)", id)
-		end
+		-- this check is only used when custom skins aren't in use
+--		if not skins.list[tonumber(skin)] then
+--			return false, S("** Invalid skin number (max value is @1)", id)
+--		end
 
 		skins.skins[playername] = "character_" .. tonumber(skin)
 
-		player:set_attribute("simple_skins:skin", skins.skins[playername])
-
 		skins.update_player_skin(player)
+
+		player:set_attribute("simple_skins:skin", skins.skins[playername])
 
 		minetest.chat_send_player(playername,
 				S("Your skin has been set to") .. " character_" .. skin)
