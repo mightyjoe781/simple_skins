@@ -126,24 +126,21 @@ skins.update_player_skin = function(player)
 
 	local name = player:get_player_name()
 
-	player:set_properties({
-		textures = {skins.skins[name] .. ".png"},
-	})
+	default.player_set_textures(player, skins.skins[name] .. ".png")
 end
 
 
 -- register sfinv tab when inv+ not active
 if skins.sfinv and not skins.invplus then
 
-sfinv.register_page("skins:skins", {
-	title = "Skins",
+sfinv.register_page("skins:skins", {title = "Skins",
+
 	get = function(self, player, context)
 		local name = player:get_player_name()
 		return sfinv.make_formspec(player, context,skins.formspec.main(name))
 	end,
-	on_player_receive_fields = function(self, player, context, fields)
 
-		local name = player:get_player_name()
+	on_player_receive_fields = function(self, player, context, fields)
 
 		local event = minetest.explode_textlist_event(fields["skins_set"])
 
@@ -152,6 +149,8 @@ sfinv.register_page("skins:skins", {
 			local index = event.index
 
 			if index > id then index = id end
+
+			local name = player:get_player_name()
 
 			skins.skins[name] = skins.list[index]
 
@@ -179,12 +178,14 @@ end
 minetest.register_on_joinplayer(function(player)
 
 	local name = player:get_player_name()
+	local skin = player:get_attribute("simple_skins:skin")
 
 	-- do we already have a skin in player attributes?
-	local skin = player:get_attribute("simple_skins:skin")
 	if skin then
 		skins.skins[name] = skin
-	else -- otherwise use default skin
+
+	-- otherwise use skin from simple_skins.mt file or default if not set
+	elseif not skins.skins[name] then
 		skins.skins[name] = "character_1"
 	end
 
@@ -207,7 +208,7 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 
 	if fields.skins then
 		inventory_plus.set_inventory_formspec(player,
-			skins.formspec.main(name) .. "button[0,.75;2,.5;main;Back]")
+				skins.formspec.main(name) .. "button[0,.75;2,.5;main;Back]")
 	end
 
 	local event = minetest.explode_textlist_event(fields["skins_set"])
@@ -224,7 +225,7 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 
 		if skins.invplus then
 			inventory_plus.set_inventory_formspec(player,
-				skins.formspec.main(name) .. "button[0,.75;2,.5;main;Back]")
+					skins.formspec.main(name) .. "button[0,.75;2,.5;main;Back]")
 		end
 
 		skins.update_player_skin(player)
@@ -268,7 +269,7 @@ minetest.register_chatcommand("setskin", {
 				S("Your skin has been set to") .. " character_" .. skin)
 
 		return true, "** " .. playername .. S("'s skin set to")
-			.. " character_" .. skin .. ".png"
+				.. " character_" .. skin .. ".png"
 	end,
 })
 

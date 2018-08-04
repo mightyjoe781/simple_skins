@@ -7,6 +7,7 @@ https://forum.minetest.net/viewtopic.php?id=9100
 
 Change log:
 
+- 0.7 - Add some error checks, improve /setskin and tweak & tidy code
 - 0.6 - Updated to use Minetest 0.4.16 functions
 - 0.5 - Added compatibility with default sfinv inventory, disabled /skin command for now
 - 0.4 - Added /skin command to set player skin, no longer dependent on Inventory+, also /setskin command for server admin to set custom skins for player.
