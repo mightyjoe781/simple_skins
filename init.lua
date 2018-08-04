@@ -4,62 +4,71 @@
 -- the default sfinv or inventory_plus when running.
 -- Released by TenPlus1 and based on Zeg9's code under MIT license
 
-skins = {}
-skins.skins = {}
-skins.modpath = minetest.get_modpath("simple_skins")
-skins.invplus = minetest.get_modpath("inventory_plus")
-skins.sfinv = minetest.get_modpath("sfinv")
+skins = {
+	skins = {}, list = {}, meta = {},
+	modpath = minetest.get_modpath("simple_skins"),
+	invplus = minetest.get_modpath("inventory_plus"),
+	sfinv = minetest.get_modpath("sfinv"),
+	file = minetest.get_worldpath() .. "/simple_skins.mt",
+	formspec = {},
+}
 
 
 -- Load support for intllib.
-local MP = minetest.get_modpath(minetest.get_current_modname())
-local S, NS = dofile(MP.."/intllib.lua")
+local S, NS = dofile(skins.modpath .. "/intllib.lua")
 
 
--- load skin list
-skins.list = {}
+-- load skin list and metadata
+local id, f, data, skin = 1
 
-local id = 1
-local f
 while true do
-	f = io.open(skins.modpath .. "/textures/character_" .. id .. ".png")
-	if not f then break end
+
+	skin = "character_" .. id
+
+	-- does skin file exist ?
+	f = io.open(skins.modpath .. "/textures/" .. skin .. ".png")
+
+	-- escape loop if not found and remove last entry
+	if not f then
+		skins.list[id] = nil
+		id = id - 1
+		break
+	end
+
 	f:close()
-	table.insert(skins.list, "character_" .. id)
-	id = id + 1
-end
-skins.list[id] = nil
-id = id - 1
+	table.insert(skins.list, skin)
 
+	-- does metadata exist for that skin file ?
+	f = io.open(skins.modpath .. "/meta/" .. skin .. ".txt")
 
--- load Metadata
-skins.meta = {}
-local f, data
-for _, i in pairs(skins.list) do
-	skins.meta[i] = {}
-	f = io.open(skins.modpath .. "/meta/" .. i .. ".txt")
-	data = nil
 	if f then
 		data = minetest.deserialize("return {" .. f:read('*all') .. "}")
 		f:close()
 	end
-	data = data or {}
-	skins.meta[i].name = data.name or ""
-	skins.meta[i].author = data.author or ""
+
+	-- add metadata to list
+	skins.meta[skin] = {
+		name = data and data.name or "",
+		author = data and data.author or "",
+	}
+
+	id = id + 1
 end
 
 
--- load player skins from file for backwards compatibility
-skins.file = minetest.get_worldpath() .. "/simple_skins.mt"
-
+-- load player skins file for backwards compatibility
 local input = io.open(skins.file, "r")
 local data = nil
+
 if input then
 	data = input:read('*all')
 	io.close(input)
 end
+
 if data and data ~= "" then
+
 	local lines = string.split(data, "\n")
+
 	for _, line in pairs(lines) do
 		data = string.split(line, " ", 2)
 		skins.skins[data[1]] = data[2]
@@ -67,8 +76,7 @@ if data and data ~= "" then
 end
 
 
--- skin selection page
-skins.formspec = {}
+-- create formspec for skin selection page
 skins.formspec.main = function(name)
 
 	local formspec = ""
