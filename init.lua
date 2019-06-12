@@ -5,12 +5,11 @@
 -- Released by TenPlus1 and based on Zeg9's code under MIT license
 
 skins = {
-	skins = {}, list = {}, meta = {},
+	skins = {}, list = {}, meta = {}, formspec = {},
 	modpath = minetest.get_modpath("simple_skins"),
 	invplus = minetest.get_modpath("inventory_plus"),
 	sfinv = minetest.get_modpath("sfinv"),
 	file = minetest.get_worldpath() .. "/simple_skins.mt",
-	formspec = {},
 }
 
 
@@ -200,7 +199,8 @@ minetest.register_on_joinplayer(function(player)
 	skins.update_player_skin(player)
 
 	if skins.invplus then
-		inventory_plus.register_button(player,"skins", "Skin")
+		inventory_plus.register_button(player,"skins", "Skin", 0,
+				"inventory_plus_skins.png")
 	end
 end)
 
