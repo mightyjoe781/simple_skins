@@ -41,7 +41,7 @@ while true do
 	f = io.open(skins.modpath .. "/meta/" .. skin .. ".txt")
 
 	if f then
-		data = minetest.deserialize("return {" .. f:read('*all') .. "}")
+		data = minetest.deserialize("return {" .. f:read("*all") .. "}")
 		f:close()
 	end
 
@@ -60,7 +60,7 @@ local input = io.open(skins.file, "r")
 local data = nil
 
 if input then
-	data = input:read('*all')
+	data = input:read("*all")
 	io.close(input)
 end
 
