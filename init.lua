@@ -163,7 +163,8 @@ sfinv.register_page("skins:skins", {title = "Skins",
 
 			skins.update_player_skin(player)
 
-			player:set_attribute("simple_skins:skin", skins.skins[name])
+			local meta = player:get_meta()
+			meta:set_string("simple_skins:skin", skins.skins[name])
 
 			sfinv.override_page("skins:skins", {
 				get = function(self, player, context)
@@ -185,10 +186,11 @@ end
 minetest.register_on_joinplayer(function(player)
 
 	local name = player:get_player_name()
-	local skin = player:get_attribute("simple_skins:skin")
+	local meta = player:get_meta()
+	local skin = meta:get_string("simple_skins:skin")
 
 	-- do we already have a skin in player attributes?
-	if skin then
+	if skin and skin ~= "" then
 		skins.skins[name] = skin
 
 	-- otherwise use skin from simple_skins.mt file or default if not set
@@ -238,7 +240,8 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 
 		skins.update_player_skin(player)
 
-		player:set_attribute("simple_skins:skin", skins.skins[name])
+		local meta = player:get_meta()
+		meta:set_string("simple_skins:skin", skins.skins[name])
 	end
 end)
 
@@ -271,7 +274,8 @@ minetest.register_chatcommand("setskin", {
 
 		skins.update_player_skin(player)
 
-		player:set_attribute("simple_skins:skin", skins.skins[playername])
+		local meta = player:get_meta()
+		meta:set_string("simple_skins:skin", skins.skins[playername])
 
 		minetest.chat_send_player(playername,
 				S("Your skin has been set to") .. " character_" .. skin)
