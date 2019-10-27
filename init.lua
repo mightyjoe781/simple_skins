@@ -133,7 +133,7 @@ skins.update_player_skin = function(player)
 
 	local name = player:get_player_name()
 
-	default.player_set_textures(player, skins.skins[name] .. ".png")
+	default.player_set_textures(player, {skins.skins[name] .. ".png"})
 end
 
 
