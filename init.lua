@@ -14,8 +14,8 @@ skins = {
 
 
 -- Load support for intllib.
-local S, NS = dofile(skins.modpath .. "/intllib.lua")
-
+local S = minetest.get_translator and minetest.get_translator("simple_skins") or
+		dofile(skins.modpath .. "/intllib.lua")
 
 -- load skin list and metadata
 local id, f, data, skin = 1
@@ -121,6 +121,30 @@ skins.formspec.main = function(name)
 	end
 
 	return formspec
+end
+
+
+-- Read the image size from a PNG file. (returns width, height)
+local PNG_HDR = string.char(0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A)
+local function read_image_size(filename)
+
+	local f = io.open(filename, "rb")
+
+	if not f then return end
+
+	f:seek("set", 0x0)
+
+	local hdr = f:read(string.len(PNG_HDR))
+
+	if hdr ~= PNG_HDR then
+		f:close() ; return
+	end
+
+	f:seek("set", 0x13) ; local ws = f:read(1)
+	f:seek("set", 0x17) ; local hs = f:read(1)
+	f:close()
+
+	return ws:byte(), hs:byte()
 end
 
 
