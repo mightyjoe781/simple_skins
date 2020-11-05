@@ -125,7 +125,7 @@ skins.formspec.main = function(name)
 	-- if preview enabled then add player model to formspec (5.4dev only)
 	if skins.preview == true then
 
-		formspec = formspec .. "model[6,0;1,2;player;character.b3d;"
+		formspec = formspec .. "model[6,-0.2;1.5,3;player;character.b3d;"
 			.. skins.skins[name] .. ".png;0,180;false;true]"
 	end
 
