@@ -10,6 +10,7 @@ skins = {
 	invplus = minetest.get_modpath("inventory_plus"),
 	sfinv = minetest.get_modpath("sfinv"),
 	file = minetest.get_worldpath() .. "/simple_skins.mt",
+	preview = minetest.settings:get_bool("simple_skins_preview")
 }
 
 
@@ -81,8 +82,7 @@ skins.formspec.main = function(name)
 	local formspec = ""
 
 	if skins.invplus then
-		formspec = "size[8,8.6]"
-			.. "bgcolor[#08080822;true]"
+		formspec = "size[8,8.6]" .. "bgcolor[#08080822;true]"
 	end
 
 	formspec = formspec .. "label[.5,2;" .. S("Select Player Skin:") .. "]"
@@ -112,12 +112,21 @@ skins.formspec.main = function(name)
 	end
 
 	if meta then
+
 		if meta.name then
 			formspec = formspec .. "label[2,.5;" .. S("Name: ") .. meta.name .. "]"
 		end
+
 		if meta.author then
 			formspec = formspec .. "label[2,1;" .. S("Author: ") .. meta.author .. "]"
 		end
+	end
+
+	-- if preview enabled then add player model to formspec (5.4dev only)
+	if skins.preview == true then
+
+		formspec = formspec .. "model[6,0;1,2;player;character.b3d;"
+			.. skins.skins[name] .. ".png;0,180;false;true]"
 	end
 
 	return formspec
@@ -158,6 +167,7 @@ skins.update_player_skin = function(player)
 	local name = player:get_player_name()
 
 	default.player_set_textures(player, {skins.skins[name] .. ".png"})
+--	player_api.set_textures(player, {skins.skins[name] .. ".png"})
 end
 
 
@@ -209,7 +219,7 @@ end
 -- load player skin on join
 minetest.register_on_joinplayer(function(player)
 
-	local name = player:get_player_name()
+	local name = player:get_player_name() ; if not name then return end
 	local meta = player:get_meta()
 	local skin = meta:get_string("simple_skins:skin")
 
@@ -225,7 +235,7 @@ minetest.register_on_joinplayer(function(player)
 	skins.update_player_skin(player)
 
 	if skins.invplus then
-		inventory_plus.register_button(player,"skins", "Skin", 0,
+		inventory_plus.register_button(player, "skins", "Skin", 0,
 				"inventory_plus_skins.png")
 	end
 end)
@@ -265,6 +275,7 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 		skins.update_player_skin(player)
 
 		local meta = player:get_meta()
+
 		meta:set_string("simple_skins:skin", skins.skins[name])
 	end
 end)
@@ -299,6 +310,7 @@ minetest.register_chatcommand("setskin", {
 		skins.update_player_skin(player)
 
 		local meta = player:get_meta()
+
 		meta:set_string("simple_skins:skin", skins.skins[playername])
 
 		minetest.chat_send_player(playername,

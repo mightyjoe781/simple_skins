@@ -1,0 +1,2 @@
+#    When true character model will appear in formspec with current skin as texture
+simple_skins_preview (Simple Skins Preview) bool false
