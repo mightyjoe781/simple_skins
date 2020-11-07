@@ -174,7 +174,7 @@ end
 -- register sfinv tab when inv+ not active
 if skins.sfinv and not skins.invplus then
 
-sfinv.register_page("skins:skins", {title = "Skins",
+sfinv.register_page("skins:skins", {title = S("Skins"),
 
 	get = function(self, player, context)
 		local name = player:get_player_name()
@@ -235,7 +235,7 @@ minetest.register_on_joinplayer(function(player)
 	skins.update_player_skin(player)
 
 	if skins.invplus then
-		inventory_plus.register_button(player, "skins", "Skin", 0,
+		inventory_plus.register_button(player, "skins", S("Skins"), 0,
 				"inventory_plus_skins.png")
 	end
 end)
