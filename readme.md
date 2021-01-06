@@ -7,7 +7,8 @@ https://forum.minetest.net/viewtopic.php?id=9100
 
 Change log:
 
-- 0.8 - Added player model preview when viewing formspec (Minetest 5.4dev only)
+- 0.9 - Added Unified Inventory support (thanks Opvolger)
+- 0.8 - Added player model preview when viewing formspec (Minetest 5.4 dev only)
 - 0.7 - Add some error checks, improve /setskin and tweak & tidy code
 - 0.6 - Updated to use Minetest 0.4.16 functions
 - 0.5 - Added compatibility with default sfinv inventory, disabled /skin command for now
