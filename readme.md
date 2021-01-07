@@ -1,7 +1,7 @@
 Simple Skins
 
-Simple Skins mod for Minetest uses SfInv or Inventory Plus mods when available
-to allow players to select a skin/texture from the list.
+Simple Skins mod for Minetest uses SFInv, Inventory Plus or Unified Inventory mods when
+available to allow players to select a skin/texture from the list.
 
 https://forum.minetest.net/viewtopic.php?id=9100
 

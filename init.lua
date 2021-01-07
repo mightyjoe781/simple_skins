@@ -4,39 +4,59 @@
 -- the default sfinv or inventory_plus when running.
 -- Released by TenPlus1 and based on Zeg9's code under MIT license
 
+-- Load support for intllib.
+local S = minetest.get_translator and minetest.get_translator("simple_skins") or
+		dofile(skins.modpath .. "/intllib.lua")
+
 skins = {
 	skins = {}, list = {}, meta = {}, formspec = {},
 	modpath = minetest.get_modpath("simple_skins"),
 	invplus = minetest.get_modpath("inventory_plus"),
 	unified_inventory = minetest.get_modpath("unified_inventory"),
+	default_skin_tab = false,
 	sfinv = minetest.get_modpath("sfinv"),
+	transparant_list = false,
+	id = 1,
 	file = minetest.get_worldpath() .. "/simple_skins.mt",
-	preview = minetest.settings:get_bool("simple_skins_preview")
+	preview = minetest.settings:get_bool("simple_skins_preview"),
+	translate = S
 }
 
 
--- Load support for intllib.
-local S = minetest.get_translator and minetest.get_translator("simple_skins") or
-		dofile(skins.modpath .. "/intllib.lua")
+-- check and use specific inventory
+if skins.unified_inventory then
+	skins.transparant_list = true
+	dofile(skins.modpath .. "/unified_inventory.lua")
+
+elseif skins.invplus then
+	skins.transparant_list = true
+	dofile(skins.modpath .. "/inventory_plus.lua")
+
+elseif skins.sfinv then
+	skins.default_skin_tab = not skins.invplus and not skins.unified_inventory
+	dofile(skins.modpath .. "/sfinv.lua")
+end
+
 
 -- load skin list and metadata
-local id, f, data, skin = 1
+local f, data, skin = 1
 
 while true do
 
-	skin = "character_" .. id
+	skin = "character_" .. skins.id
 
 	-- does skin file exist ?
 	f = io.open(skins.modpath .. "/textures/" .. skin .. ".png")
 
 	-- escape loop if not found and remove last entry
 	if not f then
-		skins.list[id] = nil
-		id = id - 1
+		skins.list[skins.id] = nil
+		skins.id = skins.id - 1
 		break
 	end
 
 	f:close()
+
 	table.insert(skins.list, skin)
 
 	-- does metadata exist for that skin file ?
@@ -50,10 +70,10 @@ while true do
 	-- add metadata to list
 	skins.meta[skin] = {
 		name = data and data.name or "",
-		author = data and data.author or "",
+		author = data and data.author or ""
 	}
 
-	id = id + 1
+	skins.id = skins.id + 1
 end
 
 
@@ -80,13 +100,7 @@ end
 -- create formspec for skin selection page
 skins.formspec.main = function(name)
 
-	local formspec = ""
-
-	if skins.invplus then
-		formspec = "size[8,8.6]" .. "bgcolor[#08080822;true]"
-	end
-
-	formspec = formspec .. "label[.5,2;" .. S("Select Player Skin:") .. "]"
+	local formspec = "label[.5,2;" .. S("Select Player Skin:") .. "]"
 		.. "textlist[.5,2.5;6.8,6;skins_set;"
 
 	local meta
@@ -106,7 +120,7 @@ skins.formspec.main = function(name)
 		end
 	end
 
-	if skins.invplus or skins.unified_inventory then
+	if skins.transparant_list then
 		formspec = formspec .. ";" .. selected .. ";true]"
 	else
 		formspec = formspec .. ";" .. selected .. ";false]"
@@ -172,48 +186,22 @@ skins.update_player_skin = function(player)
 end
 
 
--- register sfinv tab when inv+ not active
-if skins.sfinv and not skins.invplus and not skins.unified_inventory then
+skins.event_CHG = function(event, player)
 
-sfinv.register_page("skins:skins", {title = S("Skins"),
+	local name = player:get_player_name()
+	local index = math.min(event.index, skins.id)
 
-	get = function(self, player, context)
-		local name = player:get_player_name()
-		return sfinv.make_formspec(player, context,skins.formspec.main(name))
-	end,
+	if not skins.list[index] then
+		return -- Do not update wrong skin number
+	end
 
-	on_player_receive_fields = function(self, player, context, fields)
+	skins.skins[name] = skins.list[index]
 
-		local event = minetest.explode_textlist_event(fields["skins_set"])
+	skins.update_player_skin(player)
 
-		if event.type == "CHG" then
+	local meta = player:get_meta()
 
-			local index = event.index
-
-			if index > id then index = id end
-
-			local name = player:get_player_name()
-
-			skins.skins[name] = skins.list[index]
-
-			skins.update_player_skin(player)
-
-			local meta = player:get_meta()
-			meta:set_string("simple_skins:skin", skins.skins[name])
-
-			sfinv.override_page("skins:skins", {
-				get = function(self, player, context)
-					local name = player:get_player_name()
-					return sfinv.make_formspec(player, context,
-							skins.formspec.main(name))
-				end,
-			})
-
-			sfinv.set_player_inventory_formspec(player)
-		end
-	end,
-})
-
+	meta:set_string("simple_skins:skin", skins.skins[name])
 end
 
 
@@ -234,93 +222,7 @@ minetest.register_on_joinplayer(function(player)
 	end
 
 	skins.update_player_skin(player)
-
-	if skins.invplus then
-		inventory_plus.register_button(player, "skins", S("Skins"), 0,
-				"inventory_plus_skins.png")
-	end
-
-	if skins.unified_inventory then
-
-		unified_inventory.register_button("skins", {
-			type = "image",
-			image = "inventory_plus_skins.png",
-			tooltip = S("Skins")
-		})
-
-		unified_inventory.register_page("skins", {
-
-			get_formspec = function(player, perplayer_formspec)
-
-				local formheadery =  perplayer_formspec.form_header_y
-				local F = minetest.formspec_escape
-				local player_name = player:get_player_name()
-				local formspec = "label[0," .. formheadery .. ";" .. F(S("Skins")).. "]"
-
-				formspec = formspec.."listcolors[#00000000;#00000000]"
-				formspec = formspec..skins.formspec.main(player_name)
-
-				return {formspec=formspec, draw_inventory = false}
-			end,
-		})
-	end
 end)
-
-
--- formspec control for inventory_plus and unified_inventory
-minetest.register_on_player_receive_fields(function(player, formname, fields)
-
-	if skins.sfinv then
-
-		if skins.invplus or skins.unified_inventory then
-
-			local name = player:get_player_name()
-
-			if fields.skins then
-
-				if skins.invplus then
-
-					inventory_plus.set_inventory_formspec(
-							player, skins.formspec.main(name)
-							.. "button[0,.75;2,.5;main;Back]")
-				end
-
-				if skins.unified_inventory then
-					unified_inventory.set_inventory_formspec(player, "skins")
-				end
-			end
-
-			local event = minetest.explode_textlist_event(fields["skins_set"])
-
-			if event.type == "CHG" then
-
-				local index = math.min(event.index, id)
-
-				if not skins.list[index] then
-					return -- Do not update wrong skin number
-				end
-
-				skins.skins[name] = skins.list[index]
-
-				if skins.invplus then
-					inventory_plus.set_inventory_formspec(player,
-							skins.formspec.main(name) .. "button[0,.75;2,.5;main;Back]")
-				end
-
-				if skins.unified_inventory then
-					unified_inventory.set_inventory_formspec(player, "skins")
-				end
-
-				skins.update_player_skin(player)
-
-				local meta = player:get_meta()
-
-				meta:set_string("simple_skins:skin", skins.skins[name])
-			end
-		end
-	end
-end)
-
 
 -- admin command to set player skin (usually for custom skins)
 minetest.register_chatcommand("setskin", {
