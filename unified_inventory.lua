@@ -16,12 +16,12 @@ unified_inventory.register_page("skins", {
 		local formheadery =  perplayer_formspec.form_header_y
 		local F = minetest.formspec_escape
 		local player_name = player:get_player_name()
-		local formspec = "label[0,"..formheadery..";" ..F(S("Skins")).."]"
+		local formspec = "label[0," .. formheadery .. ";" .. F(S("Skins")) .."]"
 
-		formspec = formspec.."listcolors[#00000000;#00000000]"
-		formspec = formspec..skins.formspec.main(player_name)
+		formspec = formspec .. "listcolors[#00000000;#00000000]"
+		formspec = formspec .. skins.formspec.main(player_name)
 
-		return {formspec=formspec, draw_inventory = false}
+		return {formspec = formspec, draw_inventory = false}
 	end
 })
 

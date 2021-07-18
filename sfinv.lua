@@ -29,11 +29,11 @@ if skins.default_skin_tab then
 
 						return sfinv.make_formspec(player, context,
 								skins.formspec.main(name))
-					end,
+					end
 				})
 
 				sfinv.set_player_inventory_formspec(player)
 			end
-		end,
+		end
 	})
 end

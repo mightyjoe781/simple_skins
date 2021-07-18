@@ -3,6 +3,7 @@ local S = skins.translate
 
 
 minetest.register_on_joinplayer(function(player)
+
 	inventory_plus.register_button(player, "skins", S("Skins"), 0,
 			"inventory_plus_skins.png")
 end)
@@ -20,7 +21,7 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 				"size[8,8.6]"
 				.. "bgcolor[#08080822;true]"
 				.. skins.formspec.main(name)
-				.. "button[0,.75;2,.5;main;Back]")
+				.. "button[0,.75;2,.5;main;" .. S("Back") .. "]")
 		end
 
 		local event = minetest.explode_textlist_event(fields["skins_set"])
@@ -33,7 +34,7 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 				"size[8,8.6]"
 				.. "bgcolor[#08080822;true]"
 				.. skins.formspec.main(name)
-				.. "button[0,.75;2,.5;main;Back]")
+				.. "button[0,.75;2,.5;main;" .. S("Back") .. "]")
 		end
 	end
 end)

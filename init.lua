@@ -224,6 +224,7 @@ minetest.register_on_joinplayer(function(player)
 	skins.update_player_skin(player)
 end)
 
+
 -- admin command to set player skin (usually for custom skins)
 minetest.register_chatcommand("setskin", {
 	params = "<player> <skin number>",
