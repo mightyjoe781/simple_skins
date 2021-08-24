@@ -1,15 +1,14 @@
-
 -- Simple Skins mod for minetest
 -- Adds a simple skin selector to the inventory by using
 -- the default sfinv or inventory_plus when running.
--- Released by TenPlus1 and based on Zeg9's code under MIT license
+-- Released by smk based on TenPlus1 which was based on Zeg9's code under MIT license
 
 -- Load support for intllib.
 local S = minetest.get_translator and minetest.get_translator("simple_skins") or
 		dofile(skins.modpath .. "/intllib.lua")
 
 skins = {
-	skins = {}, list = {}, meta = {}, formspec = {},
+	skins = {}, list = {}, meta = {}, formspec = {}, slist = {},
 	modpath = minetest.get_modpath("simple_skins"),
 	invplus = minetest.get_modpath("inventory_plus"),
 	unified_inventory = minetest.get_modpath("unified_inventory"),
@@ -19,7 +18,7 @@ skins = {
 	id = 1,
 	file = minetest.get_worldpath() .. "/simple_skins.mt",
 	preview = minetest.settings:get_bool("simple_skins_preview"),
-	translate = S
+	translate = S, upper_limit = 4500, skin_limit = 3000
 }
 
 
@@ -41,8 +40,10 @@ end
 -- load skin list and metadata
 local f, data, skin = 1
 
-while true do
-
+while (function()
+    if skins.id > skins.upper_limit then
+            return false;
+    end
 	skin = "character_" .. skins.id
 
 	-- does skin file exist ?
@@ -50,14 +51,14 @@ while true do
 
 	-- escape loop if not found and remove last entry
 	if not f then
-		skins.list[skins.id] = nil
-		skins.id = skins.id - 1
-		break
+		skins.id = skins.id + 1
+	--    table.insert(skins.list, "smk")
+        return true;
 	end
 
 	f:close()
-
-	table.insert(skins.list, skin)
+	-- table.insert(skins.list, skin)
+    skins.list[skins.id] = skin
 
 	-- does metadata exist for that skin file ?
 	f = io.open(skins.modpath .. "/meta/" .. skin .. ".txt")
@@ -72,10 +73,10 @@ while true do
 		name = data and data.name or "",
 		author = data and data.author or ""
 	}
-
-	skins.id = skins.id + 1
+    return true
+    end)() do
+    skins.id = skins.id + 1
 end
-
 
 -- load player skins file for backwards compatibility
 local input = io.open(skins.file, "r")
@@ -96,7 +97,14 @@ if data and data ~= "" then
 	end
 end
 
-
+-- filing up the sorted slist
+table.sort(skins.list)
+for k,v in pairs(skins.list) do
+    if k < skins.skin_limit then
+        table.insert(skins.slist,v)
+    end
+end
+-- table.sort(skins.slist)
 -- create formspec for skin selection page
 skins.formspec.main = function(name)
 
@@ -106,20 +114,35 @@ skins.formspec.main = function(name)
 	local meta
 	local selected = 1
 
-	for i = 1, #skins.list do
+    --
+    for k,v in pairs(skins.slist) do
+        -- Note the skin.meta[v].name that we gonna read might have
+        -- stupid character because of people | Reminder to correct it in sed script
+        -- Although a should not break so we will fix names here
+        -- %p - removes punctuation %c - removes control character
+        local parsed_sname = skins.meta[v].name:gsub('[%p%c]','')
+        formspec = formspec.. k .."-" .. parsed_sname .. ","
+        --[[
+        if string.find(skins.meta[ v ].name,";") or string.find(skins.meta[ v ].name,",")  then
+            print("Broken Skin Name".. skins.meta[ v ].name)
+            print("Remove any kind punctuation characters from name")
+        end
+        --]]
+        -- this block is not affected as it is not part of formspec processing
+        -- only strings used in formspec break
+        if skins.skins[name] == v then
+            selected = k 
+            meta = skins.meta[ skins.skins[name] ]
+        end
 
-		formspec = formspec .. skins.meta[ skins.list[i] ].name
+    end
+     -- later to be used for filedetection
+     local real_id = skins.slist[selected]:gsub(".*_","")
+     -- print()
+    formspec = formspec:sub(1,-2)
 
-		if skins.skins[name] == skins.list[i] then
-			selected = i
-			meta = skins.meta[ skins.skins[name] ]
-		end
-
-		if i < #skins.list then
-			formspec = formspec ..","
-		end
-	end
-
+    --]]
+    --
 	if skins.transparant_list then
 		formspec = formspec .. ";" .. selected .. ";true]"
 	else
@@ -127,14 +150,18 @@ skins.formspec.main = function(name)
 	end
 
 	if meta then
-
+        
 		if meta.name then
-			formspec = formspec .. "label[2,.5;" .. S("Name: ") .. meta.name .. "]"
+            meta.name = meta.name:gsub('[%p%c]','')
+                -- added for letting user know real skin code for /setskin
+			formspec = formspec .. "label[2,.5;"  .. S("Name: ") .. "(".. real_id.. ")".. meta.name .. "]"
 		end
 
 		if meta.author then
+            meta.author = meta.author:gsub('[%p%c]','')
 			formspec = formspec .. "label[2,1;" .. S("Author: ") .. meta.author .. "]"
 		end
+
 	end
 
 	-- if preview enabled then add player model to formspec (5.4dev only)
@@ -143,7 +170,6 @@ skins.formspec.main = function(name)
 		formspec = formspec .. "model[6,-0.2;1.5,3;player;character.b3d;"
 			.. skins.skins[name] .. ".png;0,180;false;true]"
 	end
-
 	return formspec
 end
 
@@ -185,17 +211,17 @@ skins.update_player_skin = function(player)
 --	player_api.set_textures(player, {skins.skins[name] .. ".png"})
 end
 
-
 skins.event_CHG = function(event, player)
 
 	local name = player:get_player_name()
 	local index = math.min(event.index, skins.id)
-
-	if not skins.list[index] then
+	if not skins.slist[index] then
 		return -- Do not update wrong skin number
 	end
 
-	skins.skins[name] = skins.list[index]
+    -- print("Skins Change Done by " .. name .. " for "..  skins.slist[index])
+
+	skins.skins[name] = skins.slist[index]
 
 	skins.update_player_skin(player)
 
@@ -267,3 +293,4 @@ minetest.register_chatcommand("setskin", {
 
 
 print (S("[MOD] Simple Skins loaded"))
+print (S("loaded " .. #skins.slist .. " skins"))

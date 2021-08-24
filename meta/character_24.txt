@@ -1,2 +1,3 @@
-name = "Tuxedo Sam",
-author = "Jordach",
+name = "jojoa1997",
+author = "jojoa1997",
+license = "CC BY-SA 3.0",

@@ -1,0 +1,3 @@
+name = "jackpot",
+author = "jackpot",
+license = "CC BY-SA 3.0",

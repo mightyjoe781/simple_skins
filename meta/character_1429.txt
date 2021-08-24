@@ -1,0 +1,3 @@
+name = "Xfce",
+author = "Xfce",
+license = "CC BY-SA 3.0",

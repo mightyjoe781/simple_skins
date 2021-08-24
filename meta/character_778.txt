@@ -1,0 +1,3 @@
+name = "Nether Beast",
+author = "GipNovo",
+license = "CC BY-SA 3.0",

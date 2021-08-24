@@ -1,0 +1,3 @@
+name = "Vash the Stampede",
+author = "Prf",
+license = "CC 0 (1.0)",

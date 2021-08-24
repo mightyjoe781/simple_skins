@@ -1,0 +1,3 @@
+name = "FloatingWraith",
+author = "Skel(originalby lovehart)",
+license = "CC 0 (1.0)",

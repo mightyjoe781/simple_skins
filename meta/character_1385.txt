@@ -1,0 +1,3 @@
+name = "Monoe",
+author = "Kikiyama",
+license = "CC 0 (1.0)",

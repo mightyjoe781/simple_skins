@@ -1,0 +1,3 @@
+name = "Temerlime",
+author = "Temerario",
+license = "CC BY-SA 3.0",

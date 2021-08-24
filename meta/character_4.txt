@@ -1,2 +1,3 @@
-name = "Soldier",
-author = "jmf",
+name = "Zeg9",
+author = "Zeg9",
+license = "CC BY-SA 3.0",

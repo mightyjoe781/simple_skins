@@ -1,0 +1,3 @@
+name = "yellow-border-cape",
+author = "QwertyDragon",
+license = "CC BY-SA 3.0",

@@ -1,0 +1,3 @@
+name = "Globox",
+author = "daniel.p",
+license = "CC BY-NC-SA 3.0",

@@ -1,0 +1,3 @@
+name = "DuckGirlSkin",
+author = "smk",
+license = "MIT",

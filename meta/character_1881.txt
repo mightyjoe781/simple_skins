@@ -1,0 +1,3 @@
+name = "MegaMan X - First Armor",
+author = "GhastlyGamer",
+license = "CC BY-SA 3.0",

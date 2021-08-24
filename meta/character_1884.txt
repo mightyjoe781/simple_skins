@@ -1,0 +1,3 @@
+name = "Raymond - Animal Crossing",
+author = "HelloBlueShell",
+license = "CC BY-SA 3.0",

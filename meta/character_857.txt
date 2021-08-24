@@ -1,0 +1,3 @@
+name = "Superbrioche",
+author = "SuperBrioche666",
+license = "CC BY-SA 3.0",

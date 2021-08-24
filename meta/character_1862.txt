@@ -1,0 +1,3 @@
+name = "Baxtrix without clothes",
+author = "Baxtrix",
+license = "CC 0 (1.0)",

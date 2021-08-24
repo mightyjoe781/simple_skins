@@ -1,0 +1,3 @@
+name = "oOChainLynxOo 18 Birthday skin",
+author = "WidDos",
+license = "CC BY-NC-SA 3.0",

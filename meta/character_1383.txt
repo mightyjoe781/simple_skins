@@ -1,0 +1,3 @@
+name = "Cirno",
+author = "ZUN",
+license = "CC 0 (1.0)",

@@ -1,0 +1,3 @@
+name = "mizuki",
+author = "k",
+license = "CC BY-SA 3.0",

@@ -1,0 +1,3 @@
+name = "Granny Horror Skin",
+author = "Minecraft Skins",
+license = "CC BY-SA 3.0",

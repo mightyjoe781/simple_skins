@@ -1,0 +1,3 @@
+name = "alt_tp_player",
+author = "Kingoscargames",
+license = "CC BY-SA 4.0",

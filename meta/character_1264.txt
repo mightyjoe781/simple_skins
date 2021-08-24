@@ -1,0 +1,3 @@
+name = "Blue lightning boy",
+author = "Minecraftskins",
+license = "CC BY-SA 3.0",

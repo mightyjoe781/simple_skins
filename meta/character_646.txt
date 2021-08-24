@@ -1,0 +1,3 @@
+name = "spok",
+author = "dreispok",
+license = "CC BY 4.0",

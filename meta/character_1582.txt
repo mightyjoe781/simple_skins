@@ -1,0 +1,3 @@
+name = "Cookie Monster",
+author = "FuzWoozAnt GameRS",
+license = "CC BY-SA 3.0",

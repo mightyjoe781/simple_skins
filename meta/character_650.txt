@@ -1,0 +1,3 @@
+name = "NejWolf",
+author = "NejWolf",
+license = "CC BY-SA 3.0",

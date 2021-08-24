@@ -1,0 +1,3 @@
+name = "Carbone Sheep Skin",
+author = "Calinou WidDos",
+license = "CC BY-SA 4.0",

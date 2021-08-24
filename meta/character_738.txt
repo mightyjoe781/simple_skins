@@ -1,0 +1,3 @@
+name = "hacker",
+author = "hacker",
+license = "CC BY 3.0",

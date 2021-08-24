@@ -1,0 +1,3 @@
+name = "mostruo de piedra gamer",
+author = "daniel pereira",
+license = "CC BY-SA 3.0",

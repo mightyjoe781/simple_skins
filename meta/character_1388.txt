@@ -1,0 +1,3 @@
+name = "Urotsuki",
+author = "2ch",
+license = "CC 0 (1.0)",

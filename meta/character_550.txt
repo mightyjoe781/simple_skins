@@ -1,0 +1,3 @@
+name = "Jaded*",
+author = "Jaded*",
+license = "CC BY 4.0",

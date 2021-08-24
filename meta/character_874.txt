@@ -1,0 +1,3 @@
+name = "Sabo de one piece",
+author = "Hisoka",
+license = "CC BY-SA 3.0",

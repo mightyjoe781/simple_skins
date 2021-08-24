@@ -1,2 +1,3 @@
-name = "Tux",
-author = "jmf",
+name = "Female Sam",
+author = "Jordach",
+license = "CC BY-NC-SA 3.0",

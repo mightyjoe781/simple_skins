@@ -1,0 +1,3 @@
+name = "cd",
+author = "cd2 (cdqwertz)",
+license = "CC BY-SA 3.0",

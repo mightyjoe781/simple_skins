@@ -1,0 +1,3 @@
+name = "Myordas' Skin",
+author = "Myordas",
+license = "CC 0 (1.0)",

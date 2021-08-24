@@ -1,0 +1,3 @@
+name = "DiamondDude10",
+author = "DiamondDude10",
+license = "CC 0 (1.0)",

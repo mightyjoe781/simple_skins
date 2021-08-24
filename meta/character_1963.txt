@@ -1,0 +1,3 @@
+name = "hobbitf_lott",
+author = "catninja",
+license = "CC BY-SA 3.0",

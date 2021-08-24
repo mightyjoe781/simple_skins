@@ -1,0 +1,3 @@
+name = "Bajancanadian",
+author = "bajanhgk",
+license = "CC BY 4.0",

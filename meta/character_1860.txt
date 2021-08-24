@@ -1,0 +1,3 @@
+name = "Wedry without clothes",
+author = "Wedry",
+license = "CC 0 (1.0)",

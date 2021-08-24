@@ -1,0 +1,3 @@
+name = "Cool boy",
+author = "Demonhunter555",
+license = "CC 0 (1.0)",

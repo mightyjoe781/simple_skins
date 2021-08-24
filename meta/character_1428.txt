@@ -1,0 +1,3 @@
+name = "Stan Lee (R.I.P)",
+author = "Maverick2797",
+license = "CC BY-SA 3.0",

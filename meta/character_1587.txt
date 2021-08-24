@@ -1,0 +1,3 @@
+name = "Duke v1",
+author = "Rael BlackRabbit",
+license = "CC BY-SA 4.0",

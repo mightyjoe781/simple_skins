@@ -1,0 +1,3 @@
+name = "Ness",
+author = "Shrek himself",
+license = "CC 0 (1.0)",

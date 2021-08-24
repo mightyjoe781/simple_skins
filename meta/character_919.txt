@@ -1,0 +1,3 @@
+name = "BSNT",
+author = "konradcet",
+license = "CC BY-SA 3.0",

@@ -1,0 +1,3 @@
+name = "Iris",
+author = "loupicate",
+license = "CC BY-SA 3.0",

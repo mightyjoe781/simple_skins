@@ -1,0 +1,3 @@
+name = "Zonard",
+author = "ektor",
+license = "CC 0 (1.0)",

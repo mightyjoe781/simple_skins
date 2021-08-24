@@ -1,0 +1,3 @@
+name = "VampireKitty",
+author = "xXv4mpyrepr1nceXx",
+license = "CC 0 (1.0)",

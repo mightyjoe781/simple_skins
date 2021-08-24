@@ -1,0 +1,3 @@
+name = "Ermac",
+author = "mincraft community (AutistCortana upload to minetest)",
+license = "CC BY-SA 3.0",

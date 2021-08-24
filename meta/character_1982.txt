@@ -1,0 +1,3 @@
+name = "isabella2",
+author = "Bonemouse",
+license = "CC BY-NC-SA 3.0",

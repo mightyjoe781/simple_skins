@@ -1,0 +1,3 @@
+name = "White Bomber - Bomberman",
+author = "mimiwimi",
+license = "CC BY-SA 3.0",

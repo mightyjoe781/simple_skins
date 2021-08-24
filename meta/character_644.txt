@@ -1,0 +1,3 @@
+name = "Pvt. Richard Sharpe",
+author = "Prf",
+license = "CC 0 (1.0)",

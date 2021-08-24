@@ -1,0 +1,3 @@
+name = "The_Buildeur",
+author = "The_Buildeur",
+license = "CC BY-NC-SA 3.0",

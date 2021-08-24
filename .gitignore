@@ -2,3 +2,5 @@
 .previews/output
 .previews/blender_out
 .previews/pngcrush_output
+.previews/meta.bkp
+.previews/textures.bkp

@@ -1,0 +1,3 @@
+name = "Wither Necromancer",
+author = "GipNovo",
+license = "CC BY-SA 3.0",

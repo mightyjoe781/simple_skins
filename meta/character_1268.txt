@@ -1,0 +1,3 @@
+name = "LavaMan Original by Fedora_p lava version",
+author = "Mans",
+license = "CC BY-SA 3.0",

@@ -1,0 +1,3 @@
+name = "Sheila, the Jewish Female Reactor (eye fix)",
+author = "Myordas",
+license = "CC BY-SA 3.0",

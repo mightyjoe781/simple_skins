@@ -1,0 +1,3 @@
+name = "Tanooki Mario",
+author = "yotuderconnect",
+license = "CC 0 (1.0)",

@@ -1,0 +1,3 @@
+name = "Omni-Man",
+author = "smk",
+license = "MIT",

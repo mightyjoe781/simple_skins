@@ -1,0 +1,3 @@
+name = "minion",
+author = "daniel pereira",
+license = "CC BY-SA 3.0",

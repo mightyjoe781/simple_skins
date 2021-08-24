@@ -1,0 +1,3 @@
+name = "FisherX",
+author = "I come from Norway",
+license = "CC BY-NC-SA 3.0",

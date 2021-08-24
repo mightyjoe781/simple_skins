@@ -1,0 +1,3 @@
+name = "Animator2",
+author = "Christian_Soldier",
+license = "CC 0 (1.0)",

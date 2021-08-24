@@ -1,0 +1,3 @@
+name = "trump",
+author = "??",
+license = "CC 0 (1.0)",

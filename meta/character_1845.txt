@@ -1,0 +1,3 @@
+name = "PrettyGirl",
+author = "unknown",
+license = "CC BY-SA 3.0",

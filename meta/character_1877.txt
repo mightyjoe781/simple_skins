@@ -1,0 +1,3 @@
+name = "pugcraft",
+author = "luzmacraft",
+license = "CC BY-SA 3.0",

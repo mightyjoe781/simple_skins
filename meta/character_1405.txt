@@ -1,0 +1,3 @@
+name = "rexy",
+author = "eddyel",
+license = "CC BY-SA 3.0",

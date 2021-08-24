@@ -1,0 +1,3 @@
+name = "Male angel",
+author = "loupicate",
+license = "CC BY-SA 3.0",

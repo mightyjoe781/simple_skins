@@ -1,0 +1,3 @@
+name = "chica azul",
+author = "rexyGYM",
+license = "CC BY 3.0",

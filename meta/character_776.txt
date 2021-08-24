@@ -1,0 +1,3 @@
+name = "Magna Skeleton",
+author = "GipNovo",
+license = "CC BY-SA 3.0",

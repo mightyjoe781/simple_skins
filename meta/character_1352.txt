@@ -1,0 +1,3 @@
+name = "Discord Man",
+author = "Blurple",
+license = "CC BY-SA 3.0",

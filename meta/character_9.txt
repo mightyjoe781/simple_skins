@@ -1,2 +1,3 @@
-name = "Black belt",
-author = "jmf",
+name = "Jordach",
+author = "Jordach",
+license = "CC BY-NC-SA 3.0",

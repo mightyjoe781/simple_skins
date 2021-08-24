@@ -1,0 +1,3 @@
+name = "smilla2",
+author = "ie",
+license = "CC BY-NC-SA 3.0",

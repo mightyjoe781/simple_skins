@@ -1,0 +1,3 @@
+name = "Ragnar (Rune protagonist)",
+author = "Einszone",
+license = "CC BY-NC-SA 3.0",

@@ -1,0 +1,3 @@
+name = "supergamers",
+author = "wilgner",
+license = "CC BY-SA 3.0",

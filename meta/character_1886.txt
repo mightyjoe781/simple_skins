@@ -1,0 +1,3 @@
+name = "Quote - Cave Story",
+author = "FocusSjonni",
+license = "CC BY-SA 3.0",

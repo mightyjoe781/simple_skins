@@ -1,0 +1,3 @@
+name = "kaneki",
+author = "rexyGYM",
+license = "CC BY-NC-SA 3.0",

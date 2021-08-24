@@ -1,0 +1,3 @@
+name = "Keupon",
+author = "ektor",
+license = "CC 0 (1.0)",

@@ -1,0 +1,3 @@
+name = "Bluish Boy",
+author = "Daĉjo",
+license = "CC 0 (1.0)",

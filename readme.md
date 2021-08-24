@@ -1,4 +1,10 @@
-Simple Skins
+Simple Skins [Redo]
+
+Note : This is a fork of simple_skins mod created by TenPlus1, it offers
+several improvements over the old mod and comes with 800+ predownloaded skins.
+Preview feature requires clients 5.4+. Works fine with both multicraft and minetest.
+Completely tested on sfinv, unified_inventory
+
 
 Simple Skins mod for Minetest uses SFInv, Inventory Plus or Unified Inventory mods when
 available to allow players to select a skin/texture from the list.
@@ -7,6 +13,7 @@ https://forum.minetest.net/viewtopic.php?id=9100
 
 Change log:
 
+- 1.0 - Now anything above `upper_limit` won't be scanned and above `skin_limit` won't appear in inventory.
 - 0.9 - Added Unified Inventory support (thanks Opvolger)
 - 0.8 - Added player model preview when viewing formspec (Minetest 5.4 dev only)
 - 0.7 - Add some error checks, improve /setskin and tweak & tidy code
@@ -17,3 +24,4 @@ Change log:
 - 0.2 - Added 3D_Armor mod compatibility
 - 0.1 - Added addi's changes to highlight selected skin on list (thanks)
 - 0.0 - Initial release
+

@@ -1,0 +1,3 @@
+name = "Ugly green thing",
+author = "oscar",
+license = "CC BY-SA 3.0",

@@ -1,0 +1,3 @@
+name = "Claude-the_Clown",
+author = "Jimmey",
+license = "CC BY-SA 3.0",

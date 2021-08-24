@@ -1,0 +1,3 @@
+name = "refi_player",
+author = "kheftel",
+license = "CC 0 (1.0)",

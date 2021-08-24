@@ -1,0 +1,3 @@
+name = "Headless Horseman 2",
+author = "Misty",
+license = "CC 0 (1.0)",

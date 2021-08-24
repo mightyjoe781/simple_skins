@@ -1,0 +1,3 @@
+name = "Haley, the Vegan Reactor",
+author = "Myordas",
+license = "CC BY-SA 3.0",

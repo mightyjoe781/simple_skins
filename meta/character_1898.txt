@@ -1,0 +1,3 @@
+name = "nono",
+author = "nonowastaken",
+license = "CC BY-NC-SA 3.0",

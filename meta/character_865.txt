@@ -1,0 +1,3 @@
+name = "Steve with blood",
+author = "loupicate",
+license = "CC BY-SA 3.0",

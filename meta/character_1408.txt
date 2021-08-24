@@ -1,0 +1,3 @@
+name = "Myravrax (NES 1)",
+author = "Myravrax",
+license = "CC BY-NC-SA 4.0",

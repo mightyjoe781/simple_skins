@@ -1,0 +1,3 @@
+name = "steve_blue_diamond",
+author = "Bambusman12",
+license = "CC BY-SA 4.0",

@@ -1,0 +1,3 @@
+name = "CostumeWalzy",
+author = "Walzy",
+license = "CC BY-SA 3.0",

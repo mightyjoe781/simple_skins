@@ -1,0 +1,3 @@
+name = "Candy Girl",
+author = "Belen1",
+license = "CC 0 (1.0)",

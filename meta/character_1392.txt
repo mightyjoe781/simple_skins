@@ -1,0 +1,3 @@
+name = "Queen",
+author = "XrystalFox",
+license = "CC BY-SA 3.0",

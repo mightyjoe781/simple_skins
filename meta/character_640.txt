@@ -1,0 +1,3 @@
+name = "RedKyle",
+author = "RedKyle",
+license = "CC BY 3.0",

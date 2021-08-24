@@ -1,2 +1,3 @@
-name = "Battlefield 3 Soldier",
-author = "Jordach",
+name = "Older Man Sam",
+author = "philipbenr",
+license = "CC BY-SA 3.0",

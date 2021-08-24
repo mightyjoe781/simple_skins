@@ -1,0 +1,3 @@
+name = "Neon Cute Girl",
+author = "ElMehdiBen",
+license = "CC BY-SA 3.0",

@@ -1,0 +1,3 @@
+name = "Sam II (Dungeon Master Outfit)",
+author = "Esteban",
+license = "CC BY-SA 3.0",

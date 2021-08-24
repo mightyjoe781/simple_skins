@@ -1,0 +1,3 @@
+name = "Kel0hap without clothes",
+author = "Kel0hap",
+license = "CC 0 (1.0)",

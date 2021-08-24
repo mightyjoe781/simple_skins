@@ -1,0 +1,3 @@
+name = "Sonic - Sonic Riders",
+author = "hyprhare",
+license = "CC BY-SA 3.0",

@@ -1,0 +1,3 @@
+name = "SirYakari without clothes",
+author = "SirYakari",
+license = "CC 0 (1.0)",

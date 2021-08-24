@@ -1,0 +1,3 @@
+name = "Delaroyas",
+author = "Delaroyas Laroyas",
+license = "CC BY-SA 3.0",
