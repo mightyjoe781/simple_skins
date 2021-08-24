@@ -26,3 +26,8 @@ Change log:
 - 0.1 - Added addi's changes to highlight selected skin on list (thanks)
 - 0.0 - Initial release
 
+Further Improvements
+- When preview is disabled shift list formspec to side of screen and change camera to front third person view as to see the changes being applied. "Nicos servers have it but did not made the code public."
+- Add a downloader script
+- Improve the convertor script to allow converting even minecraft skins
+- Fix some issues in meta fixer script. ( need to removed or merged into downloader script)
