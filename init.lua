@@ -70,8 +70,8 @@ while (function()
 
 	-- add metadata to list
 	skins.meta[skin] = {
-		name = data and data.name or "",
-		author = data and data.author or ""
+        name = data and data.name and data.name:gsub("[%p%c]", "") or "",
+        author = data and data.author and data.author:gsub("[%p%c]", "") or ""
 	}
     return true
     end)() do
@@ -98,12 +98,12 @@ if data and data ~= "" then
 end
 
 -- filing up the sorted slist
-table.sort(skins.list)
 for k,v in pairs(skins.list) do
     if k < skins.skin_limit then
         table.insert(skins.slist,v)
     end
 end
+
 -- table.sort(skins.slist)
 -- create formspec for skin selection page
 skins.formspec.main = function(name)
@@ -116,33 +116,21 @@ skins.formspec.main = function(name)
 
     --
     for k,v in pairs(skins.slist) do
-        -- Note the skin.meta[v].name that we gonna read might have
-        -- stupid character because of people | Reminder to correct it in sed script
-        -- Although a should not break so we will fix names here
-        -- %p - removes punctuation %c - removes control character
-        local parsed_sname = skins.meta[v].name:gsub('[%p%c]','')
-        formspec = formspec.. k .."-" .. parsed_sname .. ","
-        --[[
-        if string.find(skins.meta[ v ].name,";") or string.find(skins.meta[ v ].name,",")  then
-            print("Broken Skin Name".. skins.meta[ v ].name)
-            print("Remove any kind punctuation characters from name")
-        end
-        --]]
-        -- this block is not affected as it is not part of formspec processing
-        -- only strings used in formspec break
+
+        formspec = formspec.. k .."-" .. skins.meta[v].name.. ","
+
         if skins.skins[name] == v then
             selected = k 
             meta = skins.meta[ skins.skins[name] ]
         end
 
     end
-     -- later to be used for filedetection
-     local real_id = skins.slist[selected]:gsub(".*_","")
-     -- print()
+    -- removes the last ',' from formspec generated
     formspec = formspec:sub(1,-2)
 
-    --]]
-    --
+     -- later to be used for filedetection for setskin command
+    local real_id = skins.slist[selected]:gsub(".*_","")
+
 	if skins.transparant_list then
 		formspec = formspec .. ";" .. selected .. ";true]"
 	else
@@ -152,13 +140,10 @@ skins.formspec.main = function(name)
 	if meta then
         
 		if meta.name then
-            meta.name = meta.name:gsub('[%p%c]','')
-                -- added for letting user know real skin code for /setskin
-			formspec = formspec .. "label[2,.5;"  .. S("Name: ") .. "(".. real_id.. ")".. meta.name .. "]"
+			formspec = formspec .. "label[2,.5;"  .. S("Name: ") .. "(".. real_id.. ") ".. meta.name .. "]"
 		end
 
 		if meta.author then
-            meta.author = meta.author:gsub('[%p%c]','')
 			formspec = formspec .. "label[2,1;" .. S("Author: ") .. meta.author .. "]"
 		end
 
