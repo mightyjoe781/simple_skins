@@ -13,6 +13,7 @@ https://forum.minetest.net/viewtopic.php?id=9100
 
 Change log:
 
+- 1.1 - Crash When formspec is skewed due to weird naming of meta details
 - 1.0 - Now anything above `upper_limit` won't be scanned and above `skin_limit` won't appear in inventory.
 - 0.9 - Added Unified Inventory support (thanks Opvolger)
 - 0.8 - Added player model preview when viewing formspec (Minetest 5.4 dev only)
