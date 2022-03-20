@@ -1,11 +1,31 @@
 -- Simple Skins mod for minetest
 -- Adds a simple skin selector to the inventory by using
 -- the default sfinv or inventory_plus when running.
--- Released by smk based on TenPlus1 which was based on Zeg9's code under MIT license
+-- Released by smk based on TenPlus1's code which was based on Zeg9's code under MIT license
 
--- Load support for intllib.
-local S = minetest.get_translator and minetest.get_translator("simple_skins") or
-		dofile(skins.modpath .. "/intllib.lua")
+-- Load support for translation.
+local S
+
+if minetest.get_translator ~= nil then
+	S = minetest.get_translator("simple_skins")
+else
+	if minetest.get_modpath("intllib") then
+		dofile(minetest.get_modpath("intllib").."/init.lua")
+		if intllib.make_gettext_pair then
+			gettext, ngettext = intllib.make_gettext_pair() -- new gettext method
+		else
+			gettext = intllib.Getter() -- old text file method
+		end
+		S = gettext
+	else -- boilerplate function
+		S = function(str, ...)
+			local args = {...}
+			return str:gsub("@%d", function(match)
+				return args[tonumber(match:sub(2))]
+			end)
+		end
+	end
+end
 
 skins = {
 	skins = {}, list = {}, meta = {}, formspec = {}, slist = {},
