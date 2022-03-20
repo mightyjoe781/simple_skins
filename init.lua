@@ -194,8 +194,11 @@ skins.update_player_skin = function(player)
 	end
 
 	local name = player:get_player_name()
-
-	default.player_set_textures(player, {skins.skins[name] .. ".png"})
+		player_api.set_textures(player, {skins.skins[name] .. ".png"})
+	if is_50 then
+	else
+		default.player_set_textures(player, {skins.skins[name] .. ".png"})
+	end
 --	player_api.set_textures(player, {skins.skins[name] .. ".png"})
 end
 
