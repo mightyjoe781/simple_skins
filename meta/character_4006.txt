@@ -1,0 +1,3 @@
+name = "Malstromer",
+author = "TheMalaysianDude",
+license = "MIT",
